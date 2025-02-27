@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const connection = require("./middleware/database.js")
 
 const app = express();
 const port = process.env.PORT || 5000;
