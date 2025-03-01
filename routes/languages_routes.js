@@ -1,4 +1,4 @@
-const {getAllLanguageController, getByIdLanguageController, createLanguageController, deleteLanguageController} = require(`../controller/languages_controller.js`);
+const {getAllLanguageController, getByIdLanguageController, createLanguageController, deleteLanguageController, updateLanguageController} = require(`../controller/languages_controller.js`);
 
 const express = require("express");
 const router = express.Router();
@@ -9,5 +9,6 @@ router.get("/", getAllLanguageController);
 router.get("/:id", getByIdLanguageController);
 router.post("/", createLanguageController);
 router.delete("/:id", deleteLanguageController);
+router.put("/:id", updateLanguageController);
 
 module.exports = router
