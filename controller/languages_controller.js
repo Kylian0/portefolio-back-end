@@ -1,4 +1,4 @@
-const {getAllLanguageModel, getByIdLanguageModel} = require(`../model/languages_model.js`);
+const {getAllLanguageModel, getByIdLanguageModel, createLanguageModel} = require(`../model/languages_model.js`);
 
 // Controller de getAll pour la table language.
 
@@ -32,4 +32,23 @@ async function getByIdLanguageController(req, res) {
     }
 }
 
-module.exports = { getAllLanguageController, getByIdLanguageController };
+// Controller du Create pour la table language
+
+async function createLanguageController(req, res) {
+
+    const {name_language, level_language} = req.body;
+
+    // Véréfication des champs requis
+    if (!name_language || typeof name_language !== "string" || !level_language || typeof level_language !== "string") {
+        return res.status(400).json({error : "Le nom du langage et le niveau son requis et doivent être des chaînes de caractères"});
+    }
+
+    try {
+        const newLanguage = await createLanguageModel(name_language, level_language);
+        res.status(201).json(newLanguage);
+    } catch (error) {
+        res.status(500).json({error : "Erreur lors de la création du langage"});
+    }
+}
+
+module.exports = { getAllLanguageController, getByIdLanguageController, createLanguageController };

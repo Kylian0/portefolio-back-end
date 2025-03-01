@@ -1,5 +1,6 @@
 const connection = require("../middleware/database.js");
 
+// Model du getAll pour la table language
 
 async function getAllLanguageModel() {
     let conn;
@@ -15,6 +16,8 @@ async function getAllLanguageModel() {
     }
 };
 
+// Model du getById pour la table language
+
 async function getByIdLanguageModel(id) {
     let conn;
     try {
@@ -29,4 +32,23 @@ async function getByIdLanguageModel(id) {
     }
 };
 
-module.exports = { getAllLanguageModel, getByIdLanguageModel };
+ // Model pour le Create de la table language
+
+ async function createLanguageModel(name_language, level_language) {
+    let conn;
+
+    try {
+        conn = await connection.getConnection();
+
+        const [result] = await conn.query("INSERT INTO languages (name_language, level_language) VALUES (?, ?)", 
+            [name_language, level_language]
+        );
+        return { id: result.insertId, name_language, level_language}
+    } catch (error) {
+        console.error("Erreur lors de la création du langage");
+    } finally {
+        if (conn) conn.release();
+    }
+ }
+
+module.exports = { getAllLanguageModel, getByIdLanguageModel, createLanguageModel };
