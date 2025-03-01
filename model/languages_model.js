@@ -51,4 +51,26 @@ async function getByIdLanguageModel(id) {
     }
  }
 
-module.exports = { getAllLanguageModel, getByIdLanguageModel, createLanguageModel };
+ // Model pour le Delete de la table language
+
+ async function deleteLanguageModel(id) {
+    let conn;
+    try {
+        conn = await connection.getConnection();
+
+        const [check] = await conn.query("SELECT * FROM languages WHERE Id_languages = ?", [id]);
+        if (check.length === 0) {
+            return { success: false, message: "Langage non toruvé"};
+        }
+
+        await conn.query("DELETE FROM languages WHERE Id_languages = ?", [id]);
+        return {success: true, message: "Langage supprimé avec succès"};
+
+    } catch (error) {
+        console.error("Erreur lors de la suppression du langage : ", error);
+    } finally {
+        if (conn) conn.release();
+    }
+ }
+
+module.exports = { getAllLanguageModel, getByIdLanguageModel, createLanguageModel, deleteLanguageModel };

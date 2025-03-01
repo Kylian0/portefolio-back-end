@@ -1,6 +1,6 @@
-const {getAllLanguageModel, getByIdLanguageModel, createLanguageModel} = require(`../model/languages_model.js`);
+const {getAllLanguageModel, getByIdLanguageModel, createLanguageModel, deleteLanguageModel} = require(`../model/languages_model.js`);
 
-// Controller de getAll pour la table language.
+// Controller de GETALL pour la table language.
 
 async function getAllLanguageController(req, res) {
     try {
@@ -11,7 +11,7 @@ async function getAllLanguageController(req, res) {
     }
 }
 
-// Controller du GetById pour la table language
+// Controller du GETBYID pour la table language
 
 async function getByIdLanguageController(req, res) {
     const id = parseInt(req.params.id, 10); // Assure que l'ID est un nombre
@@ -32,7 +32,7 @@ async function getByIdLanguageController(req, res) {
     }
 }
 
-// Controller du Create pour la table language
+// Controller du CREATE pour la table language
 
 async function createLanguageController(req, res) {
 
@@ -51,4 +51,25 @@ async function createLanguageController(req, res) {
     }
 }
 
-module.exports = { getAllLanguageController, getByIdLanguageController, createLanguageController };
+// Controller du DELETE pour la table language
+
+async function deleteLanguageController(req, res) {
+    const id = parseInt(req.params.id, 10);
+
+    if (isNaN(id)) {
+        return res.status(400).json({error: "L'id doit être un nombre valide !"});
+    }
+
+    try {
+        const result = await deleteLanguageModel(id);
+
+        if (!result.success) {
+            return res.status(404).json({error: result.message});
+        }
+        res.status(200).json({message: result.message});
+    } catch (error) {
+        res.status(500).json({error: "Erreur lors de la suppression du langage"});
+    }
+}
+
+module.exports = { getAllLanguageController, getByIdLanguageController, createLanguageController, deleteLanguageController };
