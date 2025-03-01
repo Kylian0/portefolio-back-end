@@ -5,6 +5,7 @@ const cors = require("cors");
 
 const connection = require("./middleware/database.js")
 const languagesRoute = require("./routes/languages_routes.js");
+const experiencesRoute = require("./routes/experiences_routes.js");
 
 const app = express();
 
@@ -17,8 +18,10 @@ app.use(cors());
 
 app.use("*", cors());
 
-// Routes
+// Routes http
+
 app.use("/languages", languagesRoute);
+app.use("/experiences", experiencesRoute);
 
 const port = Number(process.env.PORT || 3001);
 
