@@ -18,4 +18,24 @@ async function getAllUserModel() {
     }
 }
 
-module.exports = {getAllUserModel};
+// CRUD: GETBYID for personal information table | GETBYID pour la table informations personnel (MODEL)
+
+async function getByIdUserModel(id) {
+
+    let conn;
+
+    try {
+        conn = await connection.getConnection();
+        const [rows] = await conn.query("SELECT * FROM personal_information WHERE id_personnal_information = ?",
+            [id]
+        );
+        return rows.length > 0 ? rows[0] : null;
+    } catch (error) {
+        console.error("Error while retrieving personal information by ID :", error);
+        throw error;
+    } finally {
+        if (conn) conn.release();
+    }
+}
+
+module.exports = {getAllUserModel, getByIdUserModel};
