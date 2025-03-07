@@ -1,4 +1,4 @@
-const { getAllExperiencesController, getByIdExperiencesController } = require("../controller/experiences_controller.js");
+const { getAllExperiencesController, getByIdExperiencesController, createExperiencesController } = require("../controller/experiences_controller.js");
 
 const express = require("express");
 const router = express.Router();
@@ -7,5 +7,6 @@ const router = express.Router();
 
 router.get("/", getAllExperiencesController);
 router.get("/:id", getByIdExperiencesController);
+router.post("/", createExperiencesController);
 
 module.exports = router

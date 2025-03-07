@@ -33,4 +33,23 @@ async function getByIdExperiencesModel(id) {
     }
 }
 
-module.exports = { getAllExperiencesModel, getByIdExperiencesModel };
+// CREATE Model for the table experience
+
+async function createExperiencesModel(job_title, company_name, location, duration, description) {
+    let conn;
+
+    try {
+        conn = await connection.getConnection();
+
+        const [result] = await conn.query("INSERT INTO experiences (job_title, company_name, location, duration, description) VALUES (?, ?, ?, ?, ?)",
+            [job_title, company_name, location, duration, description]
+        );
+        return {id: result.insertId, job_title, company_name, location, duration, description};
+    } catch (error) {
+        console.error("Erreur lors de la création de l'expériences")
+    } finally {
+        if (conn) conn.release();
+    }
+}
+
+module.exports = { getAllExperiencesModel, getByIdExperiencesModel, createExperiencesModel };
