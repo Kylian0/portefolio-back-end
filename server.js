@@ -4,6 +4,8 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 
 const connection = require("./middleware/database.js")
+
+const userRoute = require("./routes/user_routes.js");
 const languagesRoute = require("./routes/languages_routes.js");
 const experiencesRoute = require("./routes/experiences_routes.js");
 
@@ -20,6 +22,7 @@ app.use("*", cors());
 
 // Routes http
 
+app.use("/user", userRoute);
 app.use("/languages", languagesRoute);
 app.use("/experiences", experiencesRoute);
 

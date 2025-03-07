@@ -33,7 +33,6 @@ async function getByIdExperiencesController(req, res) {
 // Controller de CREATE pour la table experience.
 
 async function createExperiencesController(req, res) {
-    console.log("Requête reçu : ", req.body); // A ENLEVER APRES DEBUG
 
     const { job_title, company_name, location, duration, description } = req.body;
 
@@ -42,14 +41,10 @@ async function createExperiencesController(req, res) {
         return res.status(400).json({ error: "Les champs sont requis et doivent être respecter celon leurs normes" })
     }
 
-    console.log("Champ valide : ", { job_title, company_name, location, duration, description }); // A ENLEVER APRES DEBUG
-
     try {
         const newExperience = await createExperiencesModel(job_title, company_name, location, duration, description);
-        console.log("Experience crée : ", newExperience); // A ENLEVER APRES DEBUG
         res.status(201).json(newExperience);
     } catch (error) {
-        console.log("erreur lors de la creation de l'experience", error); // A ENLEVER APRES DEBUG
         res.status(500).json({error: "Erreur lors de la création de l'experiences"})
     }
 };
