@@ -1,4 +1,4 @@
-const {getAllUserModel, getByIdUserModel} = require("../model/user_model.js");
+const {getAllUserModel, getByIdUserModel, createUserModel} = require("../model/user_model.js");
 
 // CRUD: GETALL for personal information table | GETALL pour la table informations personnel (CONTROLLER)
 
@@ -33,4 +33,21 @@ async function getByIdUserController(req, res) {
     }
 }
 
-module.exports = {getAllUserController, getByIdUserController};
+// CRUD: CREATE for personal information table | CREATE pour la table informations personnel (CONTROLLER)
+
+async function createUserController(req, res) {
+    const {first_name, last_name, age, adress, phone, email, driving_licence, git_profile, hobbies} = req.body;
+
+    if (!first_name || !last_name || !email) {
+        return res.status(400).json({error: "First name, last name and email are required"});
+    }
+
+    try {
+        const newUser = await createUserModel({first_name, last_name, age, adress, phone, email, driving_licence, git_profile, hobbies});
+        res.status(201).json(newUser);
+    } catch (error) {
+        res.status(500).json({error: "Error while creating user"});
+    }
+}
+
+module.exports = {getAllUserController, getByIdUserController, createUserController};
